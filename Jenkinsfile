@@ -21,7 +21,7 @@ pipeline {
                     sh '''
                     ansible-playbook -i ansible.ini playbook.yml \
                     --private-key $SSH_KEY \
-                    -u centos
+                    -u ec2-user
                     '''
                 }
             }
