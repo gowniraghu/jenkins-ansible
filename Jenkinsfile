@@ -15,9 +15,18 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
-                sh '''
-                ansible-playbook -i ansible.ini playbook.yml
-                '''
+                withCredentials([
+                    sshUserPrivateKey(
+                        credentialsId: 'sshkey',
+                        keyFileVariable: 'SSH_KEY'
+                    )
+                ]) {
+                    sh '''
+                    ansible-playbook -i ansible.ini playbook.yml \
+                    --private-key $SSH_KEY \
+                    -u ec2-user
+                    '''
+                }
             }
         }
     }
