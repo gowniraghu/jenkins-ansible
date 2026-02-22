@@ -4,7 +4,7 @@
   become: true
 
   tasks:
-    - nmae: install httpd service
+    - name: install httpd service
       yum:
         name: httpd
         install: present
