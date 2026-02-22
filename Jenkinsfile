@@ -1,17 +1,33 @@
 pipeline {
     agent any
 
+    environment {
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
+    }
+
     stages {
-        stage('Checkout') {
+
+        stage('Checkout Code') {
             steps {
-                echo 'Checking out code...'
+                checkout scm
             }
         }
 
-        stage('Test') {
+        stage('Run Ansible Playbook') {
             steps {
-                sh 'echo Hello from Jenkins'
+                sh '''
+                ansible-playbook -i ansible.ini playbook.yml
+                '''
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Ansible playbook executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }

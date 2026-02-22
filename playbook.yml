@@ -1,0 +1,10 @@
+---
+- name: task for install httpd service
+  hosts: all
+  become: true
+
+  tasks:
+    - nmae: install httpd service
+      yum:
+        name: httpd
+        install: present
