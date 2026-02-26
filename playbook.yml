@@ -9,7 +9,7 @@
         name: httpd
         state: present
         
-    - name: start tree package
+    - name: remove tree package
       yum:
         name: tree
-        state: present
+        state: absent
