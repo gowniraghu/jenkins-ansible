@@ -12,4 +12,4 @@
     - name: start tree package
       yum:
         name: tree
-        state: started
+        state: present
