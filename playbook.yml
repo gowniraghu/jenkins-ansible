@@ -8,3 +8,8 @@
       yum:
         name: httpd
         state: present
+        
+    - name: start tree package
+      yum:
+        name: tree
+        state: started
