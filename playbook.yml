@@ -13,11 +13,9 @@
       service:
         name: httpd
         state: started
-        enabled: true
+        enabled: true  
         
-          
-        
-    - name: remove tree package
+    - name: install tree package
       yum:
         name: tree
         state: present
