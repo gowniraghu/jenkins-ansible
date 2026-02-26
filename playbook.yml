@@ -8,8 +8,16 @@
       yum:
         name: httpd
         state: present
+
+    - name: start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+        
+          
         
     - name: remove tree package
       yum:
         name: tree
-        state: absent
+        state: present
