@@ -22,6 +22,5 @@
 
     - name: copy file
       copy:
-        src: /home/ec2-user/test.txt
+        src: test
         dest: /home/ec2-user/
-
