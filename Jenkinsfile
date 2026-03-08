@@ -1,12 +1,15 @@
 pipeline {
     agent any
+    
+    parameters {
+        string(name: 'PLAYBOOK_NAME', defaultValue: 'playbook.yml', description: 'Enter the .yml filename you want to test')
+    }
 
     environment {
         ANSIBLE_HOST_KEY_CHECKING = 'False'
     }
 
     stages {
-
         stage('Checkout Code') {
             steps {
                 checkout scm
@@ -18,22 +21,13 @@ pipeline {
                 withCredentials([
                     file(credentialsId: 'sshkey', variable: 'SSH_KEY')
                 ]) {
-                    sh '''
-                    ansible-playbook -i ansible.ini playbook.yml \
-                    --private-key $SSH_KEY \
+                    sh """
+                    ansible-playbook -i ansible.ini ${params.PLAYBOOK_NAME} \
+                    --private-key ${SSH_KEY} \
                     -u ec2-user
-                    '''
+                    """
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Ansible playbook executed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
