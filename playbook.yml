@@ -1,26 +1,4 @@
 ---
-- name: task for install httpd service
+- name: learn ansible
   hosts: all
   become: true
-
-  tasks:
-    - name: install httpd service
-      yum:
-        name: httpd
-        state: present
-
-    - name: start httpd service
-      service:
-        name: httpd
-        state: started
-        enabled: true  
-        
-    - name: install tree package
-      yum:
-        name: tree
-        state: present
-
-    - name: copy file
-      copy:
-        src: test
-        dest: /home/ec2-user/
