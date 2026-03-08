@@ -19,3 +19,9 @@
       yum:
         name: tree
         state: present
+
+    - name: copy file
+      copy:
+        src: /home/ec2-user/test.txt
+        dest: /home/ec2-user/
+
