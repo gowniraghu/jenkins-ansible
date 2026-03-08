@@ -1,0 +1,14 @@
+---
+- name: create a file and directory
+  hosts: all
+
+  tasks:
+  - name: create a file
+    file:
+      path: /home/ec2-user/create_file
+      state: touch
+      
+  - name: create a directory
+    file:
+      path: /home/ec2-user/create_directory
+      state: directory
