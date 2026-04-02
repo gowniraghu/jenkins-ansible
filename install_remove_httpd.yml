@@ -19,3 +19,13 @@
       copy:
         src: index.html
         dest: /var/www/html/index.html
+
+    - name: stop httpd service
+      service:
+        name: httpd
+        state: stopped
+
+    - name: remove httpd package
+      yum:
+        name: httpd
+        state: absent    
