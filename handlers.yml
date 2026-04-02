@@ -1,0 +1,18 @@
+---
+- name : this playbook for run handlers module
+  hosts: all
+  become: true
+
+  tasks:
+  - name: install httpd package
+    yum:
+      name: httpd
+      state: present
+      notify: start httpd service
+
+  handlers:
+  - name: start httpd service
+    service:
+      name: httpd
+      state: started
+      enabled: true
