@@ -120,6 +120,13 @@ secrets in the repository.
 
 ### Permission denied (publickey)
 
+### EC2 Key Pair Note
+
+-   For EC2 instances, the initial SSH public key is usually added during
+    instance creation from the selected EC2 key pair (via cloud-init).
+-   This Jenkins + Ansible pipeline uses that key to connect, but does not
+    create the first authorized_keys entry on the server.
+
 Possible causes:
 
 -   Wrong SSH username
