@@ -12,3 +12,13 @@
     file:
       path: /home/ec2-user/create_directory
       state: directory
+
+  - name: remove a file
+    file:
+      path: /home/ec2-user/create_file
+      state: absent
+
+  - name: remove a directory
+    file:
+      path: /home/ec2-user/create_directory
+      state: absent
