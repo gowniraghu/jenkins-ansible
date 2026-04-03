@@ -3,6 +3,7 @@ pipeline {
     
     parameters {
         string(name: 'PLAYBOOK_NAME', defaultValue: 'playbook.yml', description: 'Enter the .yml filename you want to test')
+        string(name: 'TAGS', defaultValue: '', description: 'Enter tags to run specific tasks (leave empty for all tasks)')
     }
 
     environment {
@@ -24,7 +25,8 @@ pipeline {
                     sh """
                     ansible-playbook -i ansible.ini ${params.PLAYBOOK_NAME} \
                     --private-key ${SSH_KEY} \
-                    -u ec2-user
+                    -u ec2-user \
+                    ${params.TAGS ? "--tags ${params.TAGS}" : ""}
                     """
                 }
             }
