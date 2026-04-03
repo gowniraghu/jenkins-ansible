@@ -1,0 +1,28 @@
+---
+- name  : list with items 
+  hosts: all
+  become: true
+  vars:
+    packages:
+      - httpd
+      - git
+      - vim
+      - wget
+
+  tasks:
+  - name: install multiple yum packages using with_items
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ packages }}"
+
+  - name: install multiple yum packages using loop
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ packages }}"
+
+  - name: install multiple yum packages using name as list
+    yum:
+      name: "{{ packages }}"
+      state: present
