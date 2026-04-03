@@ -6,7 +6,6 @@
   tasks:
     - name: Fail command but ignore error
       shell: exit 1
-      ignore_errors: yes
 
     - name: This runs after failed task
       debug:
