@@ -1,0 +1,13 @@
+---
+- name: Minimal ignore_errors demo
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Fail command but ignore error
+      shell: exit 1
+      ignore_errors: yes
+
+    - name: This runs after failed task
+      debug:
+        msg: "ignore_errors allows playbook to continue"
