@@ -8,4 +8,4 @@
     yum:
       name: httpd
       state: present
-    when: ansible_distribution_major_version == "7"
+    when: ansible_distribution_major_version == "8"
