@@ -1,0 +1,11 @@
+---
+- name : this playbook for run when condition
+  hosts: all
+  become: true
+
+  tasks:
+  - name: install httpd package
+    yum:
+      name: httpd
+      state: present
+    when: ansible_distribution_major_version == "7"
