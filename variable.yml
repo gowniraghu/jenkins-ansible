@@ -4,6 +4,8 @@
   become: true
   vars:
     username: john
+  vars_files:
+    - user.yml  
 
   tasks:
   - name: create a user using variable
@@ -12,8 +14,6 @@
       state: present
 
   - name: create a user using variable file 
-    vars_files:
-      - user.yml
     user:
       name: "{{ user }}"
       state: present
