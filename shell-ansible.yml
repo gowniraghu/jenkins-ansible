@@ -1,7 +1,7 @@
 ---
-- name : setup tomcat
-  host: all
-  become : true
+- name: setup tomcat
+  hosts: all
+  become: true
   tasks:
   - name: install java
     yum:
@@ -17,9 +17,9 @@
     unarchive:
       src: /tmp/apache-tomcat-9.0.68.tar.gz
       dest: /opt/
-      remote_src: yes 
+      remote_src: yes
 
-  - name : executed permission for tomcat
+  - name: executed permission for tomcat
     file:
       path: /opt/apache-tomcat-9.0.68/bin/startup.sh
       mode: +x
