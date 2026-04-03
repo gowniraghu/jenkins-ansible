@@ -1,4 +1,25 @@
 ---
+# ===================================================================================
+# ignore-errors-playbook.yml
+# ===================================================================================
+# Purpose:
+#   Demonstrate Ansible task failure handling using ignore_errors.
+#   - The first task intentionally fails with `exit 1`.
+#   - `ignore_errors: true` prevents this task failure from stopping the playbook.
+#   - The second task runs regardless, proving the playbook continues.
+#
+# Behavior without ignore_errors:
+#   - If the first task does not have ignore_errors, Ansible stops the playbook on failure,
+#     and the next task is skipped.
+#   - This is useful for hard failures where you must stop execution for safety.
+#
+# Behavior with ignore_errors:
+#   - The task is marked failed, but execution continues to the next task.
+#   - Use this for non-critical operations where you want best-effort progress.
+#
+# Playbook execution command:
+#   ansible-playbook -i ansible.ini ignore-errors-playbook.yml --private-key <key> -u ec2-user
+#
 - name: Minimal ignore_errors demo
   hosts: all
   become: true
@@ -6,6 +27,7 @@
   tasks:
     - name: Fail command but ignore error
       shell: exit 1
+      ignore_errors: true
 
     - name: This runs after failed task
       debug:
