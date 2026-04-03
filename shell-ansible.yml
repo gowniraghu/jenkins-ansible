@@ -1,0 +1,28 @@
+---
+- name : setup tomcat
+  host: all
+  become : true
+  tasks:
+  - name: install java
+    yum:
+      name: java-1.8.0-openjdk
+      state: present
+
+  - name: download tomcat
+    get_url:
+      url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.68/bin/apache-tomcat-9.0.68.tar.gz
+      dest: /tmp/apache-tomcat-9.0.68.tar.gz
+
+  - name: extract tomcat
+    unarchive:
+      src: /tmp/apache-tomcat-9.0.68.tar.gz
+      dest: /opt/
+      remote_src: yes 
+
+  - name : executed permission for tomcat
+    file:
+      path: /opt/apache-tomcat-9.0.68/bin/startup.sh
+      mode: +x
+
+  - name: start tomcat
+    shell: /opt/apache-tomcat-9.0.68/bin/startup.sh
