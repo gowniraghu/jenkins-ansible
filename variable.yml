@@ -1,0 +1,19 @@
+---
+- name: create a user
+  hosts: all
+  become: true
+  vars:
+    username: john
+
+  tasks:
+  - name: create a user using variable
+    user:
+      name: "{{ username }}"
+      state: present
+
+  - name: create a user using variable file 
+    vars_files:
+      - user.yml
+    user:
+      name: "{{ user }}"
+      state: present
