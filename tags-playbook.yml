@@ -1,11 +1,53 @@
+# ==========================================
+# ANSIBLE TAGS DEMONSTRATION PLAYBOOK
+# ==========================================
+#
+# PURPOSE:
+# This playbook demonstrates how to use Ansible tags for selective task execution
+# in Jenkins CI/CD pipelines.
+#
+# HOW TAGS WORK:
+# - Tags allow you to run specific tasks selectively instead of the entire playbook
+# - When NO tags are specified: ALL tasks run (default behavior)
+# - When tags ARE specified: ONLY matching tasks run
+#
+# JENKINS USAGE:
+# - PLAYBOOK_NAME: tags-playbook.yml
+# - TAGS: (leave empty for all tasks, or specify tag name)
+#
+# EXAMPLES:
+# 1. Run all tasks:     TAGS="" or don't specify
+# 2. Run web tasks:     TAGS="web"
+# 3. Multiple tags:     TAGS="web,database"
+# 4. Skip tags:         Not implemented in this simple example
+#
+# COMMAND LINE EXAMPLES:
+# ansible-playbook tags-playbook.yml                    # Runs all tasks
+# ansible-playbook tags-playbook.yml --tags web        # Runs only web tasks
+# ansible-playbook tags-playbook.yml --tags nonexistent # Runs no tasks
+#
+# CURRENT TAGS IN THIS PLAYBOOK:
+# - web: Web server related tasks (httpd installation)
+#
+# ==========================================
+
 ---
 - name: Simple tag demonstration
   hosts: all
   become: true
 
   tasks:
+    # This task installs httpd web server
+    # Tagged with 'web' for selective execution
     - name: Install httpd package
       yum:
         name: httpd
         state: present
       tags: web
+    
+    - name: start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+      tags: db
