@@ -9,4 +9,4 @@
     - name: clone a git repository
       git:
         repo: https://github.com/gowniraghu:[{password}}/git_course.git
-      debug: /opts/git_course/
+        dest: /opts/git_course/
