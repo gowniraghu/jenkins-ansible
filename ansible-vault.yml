@@ -15,5 +15,5 @@
 
     - name: clone a git repository
       git:
-        repo: "https://gowniraghu:{{ password | urlencode }}@://github.com"
+        repo: "https://gowniraghu:{{ password | urlencode }}@github.com/gowniraghu/git_course.git"
         dest: /opts/git_course/
