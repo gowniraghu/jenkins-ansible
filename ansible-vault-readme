@@ -1,0 +1,50 @@
+# Ansible Vault Guide
+
+A quick reference for managing secrets and encrypted data in Ansible projects.
+
+## 🔐 Core Operations
+
+
+| Action | Command |
+| :--- | :--- |
+| **Create** a new encrypted file | `ansible-vault create <file_name>` |
+| **Encrypt** an existing file | `ansible-vault encrypt <file_name>` |
+| **View** content (read-only) | `ansible-vault view <file_name>` |
+| **Edit** an encrypted file | `ansible-vault edit <file_name>` |
+| **Decrypt** permanently | `ansible-vault decrypt <file_name>` |
+| **Change** vault password | `ansible-vault rekey <file_name>` |
+
+---
+
+## 🔑 Inline Variable Encryption
+To encrypt a single value for use directly inside a YAML file (e.g., `group_vars/all.yml`):
+
+```bash
+ansible-vault encrypt_string 'my_secret_password' --name 'db_password'
+
+Note: With --name 'db_password': The output includes the variable name and the encrypted block, making it ready to be pasted directly into a YAML file.
+yaml
+
+db_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      3631313433623...
+
+When a playbook contains encrypted data, you must provide the decryption password.
+Interactive Prompt
+bash
+
+ansible-playbook site.yml --ask-vault-pass
+
+
+
+ansible-playbook site.yml --vault-password-file ./.vault_pass
+
+
+ansible-playbook site.yml --vault-id dev@prompt --vault-id prod@~/.vault_pass_prod
+
+
+To automate password entry, add the following to your ansible.cfg:
+ini
+
+[defaults]
+vault_password_file = ./.vault_pass
