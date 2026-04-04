@@ -2,7 +2,7 @@
 - name: Ansible Vault Example
   hosts: all
   become: true
-  var files:
+  var_files:
     - vault.yml
 
   tasks:
