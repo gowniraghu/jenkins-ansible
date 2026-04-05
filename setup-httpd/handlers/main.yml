@@ -1,5 +1,5 @@
 ---
-  - name: start httpd service
+  - name: restart httpd service
     service:
       name: httpd
       state: started

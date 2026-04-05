@@ -20,5 +20,5 @@
     path: /etc/httpd/conf/httpd.conf
     regexp: '^Listen '
     line: "Listen {{ port }}"
-  notify: start httpd service
+  notify: restart httpd service
 
