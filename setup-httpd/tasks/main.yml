@@ -1,25 +1,25 @@
 ---
-  - name: install httpd package
-    yum:
-      name: httpd
-      state: present
-    # Note: If ansible_distribution_major_version != "2023", the task will skip with message "skipping: [host]"
-    when: ansible_distribution_major_version == "2023"
-    notify: restart httpd
+- name: install httpd package
+  yum:
+    name: httpd
+    state: present
+  # Note: If ansible_distribution_major_version != "2023", the task will skip with message "skipping: [host]"
+  when: ansible_distribution_major_version == "2023"
+  notify: restart httpd
 
-  - name: default httpd port is {{ port }}
-    debug:
-      msg: "default httpd port is {{ port }}"
+- name: default httpd port is {{ port }}
+  debug:
+    msg: "default httpd port is {{ port }}"
 
-  - name: copy index.html file to /var/www/html
-    copy:
-      src: index.html
-      dest: /var/www/html/index.html 
+- name: copy index.html file to /var/www/html
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html
 
-  - name: update httpd configuration port to {{ port }} 
-    lineinfile:
-      path: /etc/httpd/conf/httpd.conf
-      regexp: '^Listen '
-      line: "Listen {{ port }}"
-    notify: restart httpd
+- name: update httpd configuration port to {{ port }}
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^Listen '
+    line: "Listen {{ port }}"
+  notify: restart httpd
 
