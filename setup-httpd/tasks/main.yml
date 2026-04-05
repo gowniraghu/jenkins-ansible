@@ -11,8 +11,7 @@
     debug:
       msg: "default httpd port is {{ port }}"
 
- - name: copy index.html file
-   copy:
-     src:index.html
-     dest: /var/www/html/index.html
-     mode: 0644
+  - name: copy index.html file to /var/www/html
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html    
