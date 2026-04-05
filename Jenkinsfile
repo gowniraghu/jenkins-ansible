@@ -26,7 +26,7 @@ pipeline {
                     ansible-playbook -i ansible.ini ${params.PLAYBOOK_NAME} \
                     --private-key ${SSH_KEY} \
                     -u ec2-user \
-                    --vault-password-file .vault.yml \
+                    #--vault-password-file .vault.yml \
                     ${params.TAGS ? "--tags ${params.TAGS}" : ""}
                     """
                 }
