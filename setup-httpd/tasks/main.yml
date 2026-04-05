@@ -5,7 +5,6 @@
     state: present
   # Note: If ansible_distribution_major_version != "2023", the task will skip with message "skipping: [host]"
   when: ansible_distribution_major_version == "2023"
-  notify: restart httpd
 
 - name: default httpd port is {{ port }}
   debug:
@@ -21,5 +20,5 @@
     path: /etc/httpd/conf/httpd.conf
     regexp: '^Listen '
     line: "Listen {{ port }}"
-  notify: restart httpd
+  notify: start httpd service
 
