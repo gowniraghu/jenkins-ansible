@@ -14,4 +14,12 @@
   - name: copy index.html file to /var/www/html
     copy:
       src: index.html
-      dest: /var/www/html/index.html    
+      dest: /var/www/html/index.html 
+
+  - name: update httpd configuration port to {{ port }} 
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^Listen '
+      line: "Listen {{ port }}"
+      notify: restart httpd
+
