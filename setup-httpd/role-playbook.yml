@@ -1,0 +1,7 @@
+---
+- name : this play book install httpd though roles
+  hosts: all
+  become: true
+
+  roles:
+    - setup-httpd

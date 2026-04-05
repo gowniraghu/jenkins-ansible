@@ -4,9 +4,7 @@
   become: true
   vars_files:
     - vault.yml
-
-
-
+    
   tasks:
     - name : ensure git is installed
       yum:
