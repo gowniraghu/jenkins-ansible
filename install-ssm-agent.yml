@@ -1,19 +1,21 @@
-- name: Install SSM Agent
+- name: Configure and Manage SSM Agent
+  hosts: all
   become: yes
-  yum:
-    name: https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
-    state: present
-    disable_gpg_check: true
-  tags:
-    - os_config
-  when: ansible_distribution_major_version|int >= 8
+  tasks:
+    - name: Install SSM Agent
+      yum:
+        name: https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+        state: present
+        disable_gpg_check: true
+      tags:
+        - os_config
+      when: ansible_distribution_major_version | int >= 8
 
-- name: Restart SSM Agent
-  ansible.builtin.service:
-    name: amazon-ssm-agent
-    state: restarted
-  become: yes
-  tags:
-    - restart-ssm-agent
-    - os_config
-  when: ansible_distribution_major_version|int >= 8
+    - name: Restart SSM Agent
+      ansible.builtin.service:
+        name: amazon-ssm-agent
+        state: restarted
+      tags:
+        - restart-ssm-agent
+        - os_config
+      when: ansible_distribution_major_version | int >= 8
