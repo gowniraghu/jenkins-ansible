@@ -1,0 +1,34 @@
+---
+- name: Install AWS Systems Manager Agent
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Install amazon-ssm-agent from S3
+      yum:
+        name: https://s3.eu-west-1.amazonaws.com/amazon-ssm-eu-west-1/latest/linux_amd64/amazon-ssm-agent.rpm
+        state: present
+        disable_gpg_check: yes
+      register: ssm_install
+
+    - name: Enable amazon-ssm-agent service
+      systemd:
+        name: amazon-ssm-agent
+        enabled: yes
+
+    - name: Restart amazon-ssm-agent service
+      systemd:
+        name: amazon-ssm-agent
+        state: restarted
+
+    - name: Verify SSM agent status
+      systemd:
+        name: amazon-ssm-agent
+        state: started
+      register: ssm_status
+
+    - name: Display SSM agent installation result
+      debug:
+        msg: "SSM Agent installed and running successfully"
+      when: ssm_status is succeeded
