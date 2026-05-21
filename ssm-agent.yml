@@ -35,7 +35,7 @@
 
     - name: Attach IAM role to EC2 instance
       shell: >
-        aws ec2 associate-iam-instance-profile --instance-id i-02e6f482fd6eb6b13 --iam-instance-profile Name=ssm-test --region {{ aws_region }}
+        aws ec2 associate-iam-instance-profile --instance-id i-02e6f482fd6eb6b13 --iam-instance-profile Name=ssm-test
       environment:
         AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
         AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
