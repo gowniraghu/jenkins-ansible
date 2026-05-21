@@ -33,13 +33,23 @@
         msg: "SSM Agent installed and running successfully"
       when: ssm_status is succeeded
 
+    - name: Check if EC2 instance already has an IAM profile
+      shell: >
+        aws ec2 describe-iam-instance-profile-associations --filters Name=instance-id,Values=i-02e6f482fd6eb6b13 --query 'IamInstanceProfileAssociations[0].IamInstanceProfile.Id' --output text
+      register: iam_profile_check
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+        AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"
+
     - name: Attach IAM role to EC2 instance
       shell: >
         aws ec2 associate-iam-instance-profile --instance-id i-02e6f482fd6eb6b13 --iam-instance-profile Name=ssm-test
       environment:
         AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
         AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
-        AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"  
+        AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"
+      when: iam_profile_check.stdout == 'None'
     - name: Restart amazon-ssm-agent after attaching IAM role
       systemd:
         name: amazon-ssm-agent
